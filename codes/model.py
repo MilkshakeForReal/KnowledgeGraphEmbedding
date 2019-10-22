@@ -21,13 +21,14 @@ from dataloader import TestDataset
 from dgl.nn.pytorch.conv import GATConv
 class KGEModel(nn.Module):
     def __init__(self, model_name, nentity, nrelation, hidden_dim, gamma, 
-                 double_entity_embedding=False, double_relation_embedding=False):
+                 double_entity_embedding=False, double_relation_embedding=False, g):
         super(KGEModel, self).__init__()
         self.model_name = model_name
         self.nentity = nentity
         self.nrelation = nrelation
         self.hidden_dim = hidden_dim
         self.epsilon = 2.0
+        self.g = g
         
         self.gamma = nn.Parameter(
             torch.Tensor([gamma]), 
@@ -48,9 +49,7 @@ class KGEModel(nn.Module):
             a=-self.embedding_range.item(), 
             b=self.embedding_range.item()
         )
-        self.gcn = GATConv(entity_dim, entity_dim, num_heads = 3,residual=True)
-        selg.entity_embedding = sel.gcn(g, self.entity_embedding)
-        selg.entity_embedding = selg.entity_embedding.sum(dim = 1)
+        self.gcn = GATConv(self.entity_dim, self.entity_dim, num_heads = 3,residual=True)
         self.relation_embedding = nn.Parameter(torch.zeros(nrelation, self.relation_dim))
         nn.init.uniform_(
             tensor=self.relation_embedding, 
@@ -81,7 +80,7 @@ class KGEModel(nn.Module):
         Because negative samples and positive samples usually share two elements 
         in their triple ((head, relation) or (relation, tail)).
         '''
-
+        self.entity_embedding = self.gcn(self.g, self.entity_embedding).sum(dim = 1)
         if mode == 'single':
             batch_size, negative_sample_size = sample.size(0), 1
             
