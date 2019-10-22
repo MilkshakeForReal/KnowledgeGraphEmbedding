@@ -18,6 +18,7 @@ from torch.utils.data import DataLoader
 
 from dataloader import TestDataset
 
+from dgl.nn.pytorch.conv import GATConv
 class KGEModel(nn.Module):
     def __init__(self, model_name, nentity, nrelation, hidden_dim, gamma, 
                  double_entity_embedding=False, double_relation_embedding=False):
@@ -47,7 +48,9 @@ class KGEModel(nn.Module):
             a=-self.embedding_range.item(), 
             b=self.embedding_range.item()
         )
-        selg.entity_embedding = sel.GCN(g, self.entity_embedding)
+        self.gcn = GATConv(entity_dim, entity_dim, num_heads = 3,residual=True)
+        selg.entity_embedding = sel.gcn(g, self.entity_embedding)
+        selg.entity_embedding = selg.entity_embedding.sum(dim = 1)
         self.relation_embedding = nn.Parameter(torch.zeros(nrelation, self.relation_dim))
         nn.init.uniform_(
             tensor=self.relation_embedding, 
@@ -426,6 +429,3 @@ class KGEModel(nn.Module):
                 metrics[metric] = sum([log[metric] for log in logs])/len(logs)
 
         return metrics
-    
-    def GCN(self, g, nfeat):
-        return GCNConv(g, nfeat)
