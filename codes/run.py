@@ -162,11 +162,9 @@ def log_metrics(mode, step, metrics):
 def trp2graph(triples, nentity):
     g = dgl.DGLGraph()
     g.add_nodes(nentity)
-    print(g)
     src = [triples[i][0] for i in range(len(triples))]
     dit = [triples[i][2] for i in range(len(triples))]
     g.add_edges(src, dit)     
-    print(g)
     return g
 def main(args):
     if (not args.do_train) and (not args.do_valid) and (not args.do_test):
