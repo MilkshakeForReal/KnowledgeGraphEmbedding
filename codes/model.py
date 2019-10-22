@@ -20,8 +20,8 @@ from dataloader import TestDataset
 
 from dgl.nn.pytorch.conv import GATConv
 class KGEModel(nn.Module):
-    def __init__(self, model_name, nentity, nrelation, hidden_dim, gamma, 
-                 double_entity_embedding=False, double_relation_embedding=False, g = None):
+    def __init__(self, model_name, nentity, nrelation, hidden_dim, gamma,g, 
+                 double_entity_embedding=False, double_relation_embedding=False):
         super(KGEModel, self).__init__()
         self.model_name = model_name
         self.nentity = nentity
