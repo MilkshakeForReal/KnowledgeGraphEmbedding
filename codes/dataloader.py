@@ -116,12 +116,6 @@ class TrainDataset(Dataset):
             true_tail[(head, relation)] = np.array(list(set(true_tail[(head, relation)])))                 
 
         return true_head, true_tail
-
-    def construct_graph(self):
-        g = dgl.DGLGraph()
-        src = [self.triples[i][0] for i in range(len(self.triples))]
-        dit = [self.triples[i][2] for i in range(len(self.triples))]
-        return g.add_edges(src, dit)
                 
 class TestDataset(Dataset):
     def __init__(self, triples, all_true_triples, nentity, nrelation, mode):
@@ -165,12 +159,7 @@ class TestDataset(Dataset):
         mode = data[0][3]
         return positive_sample, negative_sample, filter_bias, mode
     
-    def construct_graph(self):
-        g = dgl.DGLGraph()
-        src = [self.triples[i][0] for i in range(len(self.triples))]
-        dit = [self.triples[i][2] for i in range(len(self.triples))]
-        return g.add_edges(src, dit)
-    
+   
 class BidirectionalOneShotIterator(object):
     def __init__(self, dataloader_head, dataloader_tail):
         self.iterator_head = self.one_shot_iterator(dataloader_head)
