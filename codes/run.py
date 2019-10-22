@@ -160,9 +160,11 @@ def log_metrics(mode, step, metrics):
         logging.info('%s %s at step %d: %f' % (mode, metric, step, metrics[metric]))
         
 def trp2graph(triples):
+    print(triples)
     g = dgl.DGLGraph()
     src = [triples[i][0] for i in range(len(triples))]
     dit = [triples[i][2] for i in range(len(triples))]
+    print(len(src), len(dit))
     return g.add_edges(src, dit)      
 
 def main(args):
