@@ -119,8 +119,8 @@ class TrainDataset(Dataset):
 
     def construct_graph(self):
         g = dgl.DGLGraph()
-        src = [(self.triples[i][0] for i in range(len(self.triples))]
-        dit = [(self.triples[i][2] for i in range(len(self.triples))]
+        src = [self.triples[i][0] for i in range(len(self.triples))]
+        dit = [self.triples[i][2] for i in range(len(self.triples))]
         return g.add_edges(src, dit)
                 
 class TestDataset(Dataset):
@@ -167,8 +167,8 @@ class TestDataset(Dataset):
     
     def construct_graph(self):
         g = dgl.DGLGraph()
-        src = [(self.triples[i][0] for i in range(len(self.triples))]
-        dit = [(self.triples[i][2] for i in range(len(self.triples))]
+        src = [self.triples[i][0] for i in range(len(self.triples))]
+        dit = [self.triples[i][2] for i in range(len(self.triples))]
         return g.add_edges(src, dit)
     
 class BidirectionalOneShotIterator(object):
