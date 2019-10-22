@@ -159,9 +159,9 @@ def log_metrics(mode, step, metrics):
     for metric in metrics:
         logging.info('%s %s at step %d: %f' % (mode, metric, step, metrics[metric]))
         
-def trp2graph(triples):
+def trp2graph(triples, nentity):
     g = dgl.DGLGraph()
-    g.add_nodes(len(triples))
+    g.add_nodes(nentity)
     src = [triples[i][0] for i in range(len(triples))]
     dit = [triples[i][2] for i in range(len(triples))]
     return g.add_edges(src, dit)      
@@ -232,7 +232,7 @@ def main(args):
         nrelation=nrelation,
         hidden_dim=args.hidden_dim,
         gamma=args.gamma,
-        g = trp2graph(all_true_triples),
+        g = trp2graph(all_true_triples, nentity),
         double_entity_embedding=args.double_entity_embedding,
         double_relation_embedding=args.double_relation_embedding
     )
