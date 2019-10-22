@@ -29,7 +29,6 @@ class KGEModel(nn.Module):
         self.hidden_dim = hidden_dim
         self.epsilon = 2.0
         self.g = g
-        print("graph: ", g)
         
         self.gamma = nn.Parameter(
             torch.Tensor([gamma]), 
