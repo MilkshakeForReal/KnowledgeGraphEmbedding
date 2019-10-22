@@ -20,7 +20,7 @@ from dataloader import TestDataset
 
 from dgl.nn.pytorch.conv import GATConv
 class KGEModel(nn.Module):
-    def __init__(self, model_name, nentity, nrelation, hidden_dim, gamma,g, 
+    def __init__(self, model_name, nentity, nrelation, hidden_dim, gamma, g, 
                  double_entity_embedding=False, double_relation_embedding=False):
         super(KGEModel, self).__init__()
         self.model_name = model_name
@@ -29,6 +29,7 @@ class KGEModel(nn.Module):
         self.hidden_dim = hidden_dim
         self.epsilon = 2.0
         self.g = g
+        print("graph: ", g)
         
         self.gamma = nn.Parameter(
             torch.Tensor([gamma]), 
