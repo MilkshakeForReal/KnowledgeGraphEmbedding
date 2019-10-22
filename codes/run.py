@@ -229,9 +229,9 @@ def main(args):
         nrelation=nrelation,
         hidden_dim=args.hidden_dim,
         gamma=args.gamma,
+        g = trp2graph(all_true_triples),
         double_entity_embedding=args.double_entity_embedding,
-        double_relation_embedding=args.double_relation_embedding,
-        trp2graph(all_true_triples)
+        double_relation_embedding=args.double_relation_embedding
     )
     
     logging.info('Model Parameter Configuration:')
