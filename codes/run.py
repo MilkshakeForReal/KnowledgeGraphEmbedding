@@ -162,6 +162,7 @@ def log_metrics(mode, step, metrics):
 def trp2graph(triples):
     print(triples)
     g = dgl.DGLGraph()
+    g.add_nodes(len(triples))
     src = [triples[i][0] for i in range(len(triples))]
     dit = [triples[i][2] for i in range(len(triples))]
     print(len(src), len(dit))
