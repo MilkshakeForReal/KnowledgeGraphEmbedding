@@ -43,7 +43,7 @@ class KGEModel(nn.Module):
         self.entity_dim = hidden_dim*2 if double_entity_embedding else hidden_dim
         self.relation_dim = hidden_dim*2 if double_relation_embedding else hidden_dim
         
-        self.entity_embedding = torch.ones(nentity, self.entity_dim))
+        self.entity_embedding = torch.ones(nentity, self.entity_dim)
         
         """
         nn.init.uniform_(
