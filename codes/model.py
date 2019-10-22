@@ -47,7 +47,7 @@ class KGEModel(nn.Module):
             a=-self.embedding_range.item(), 
             b=self.embedding_range.item()
         )
-        
+        selg.entity_embedding = sel.GCN(g, self.entity_embedding)
         self.relation_embedding = nn.Parameter(torch.zeros(nrelation, self.relation_dim))
         nn.init.uniform_(
             tensor=self.relation_embedding, 
@@ -426,3 +426,6 @@ class KGEModel(nn.Module):
                 metrics[metric] = sum([log[metric] for log in logs])/len(logs)
 
         return metrics
+    
+    def GCN(self, g, nfeat):
+        return GCNConv(g, nfeat)
