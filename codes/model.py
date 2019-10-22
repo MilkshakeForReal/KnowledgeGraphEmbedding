@@ -43,12 +43,15 @@ class KGEModel(nn.Module):
         self.entity_dim = hidden_dim*2 if double_entity_embedding else hidden_dim
         self.relation_dim = hidden_dim*2 if double_relation_embedding else hidden_dim
         
-        self.entity_embedding = nn.Parameter(torch.zeros(nentity, self.entity_dim))
+        self.entity_embedding = torch.ones(nentity, self.entity_dim))
+        
+        """
         nn.init.uniform_(
             tensor=self.entity_embedding, 
             a=-self.embedding_range.item(), 
             b=self.embedding_range.item()
         )
+        """
         self.gcn = GATConv(self.entity_dim, self.entity_dim, num_heads = 3,residual=True)
         self.relation_embedding = nn.Parameter(torch.zeros(nrelation, self.relation_dim))
         nn.init.uniform_(
